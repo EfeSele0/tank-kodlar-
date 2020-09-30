@@ -1,0 +1,71 @@
+#include <RHReliableDatagram.h>
+#include <RH_NRF24.h>
+
+#include <SPI.h>
+
+#define CLIENT_ADDRESS 1   
+#define SERVER_ADDRESS 2
+
+int enA = 9;
+int in1 = 14;
+int in2 = 4;
+
+int enB = 5;
+int in3 = 7;
+int in4 = 6;
+
+RH_NRF24 RadioDriver;
+
+RHReliableDatagram RadioManager(RadioDriver, SERVER_ADDRESS);
+
+uint8_t ReturnMessage[] = "JoyStick Data Received"; 
+
+uint8_t buf[RH_NRF24_MAX_MESSAGE_LEN];
+
+void setup()
+{
+  Serial.begin(9600);
+  
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  
+  if (!RadioManager.init())
+    Serial.println("yazma hatası");
+} 
+
+void loop()
+{
+  if (RadioManager.available())
+  {
+    uint8_t len = sizeof(buf);
+    uint8_t from;
+    if (RadioManager.recvfromAck(buf, &len, &from))
+
+    {
+
+if (buf[2] == 1)
+      {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    }else{
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+     }
+ 
+      
+      analogWrite(enA, buf[1]);
+      analogWrite(enB, buf[0]);
+     
+      if (!RadioManager.sendtoWait(ReturnMessage, sizeof(ReturnMessage), from))
+        Serial.println("gönderme hataları");
+    }
+  }              
+}
