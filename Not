@@ -1,1 +1,8 @@
-Hocam tek yapılması gereken kodların birleştirilmesi
+Hocam led verici de sadece ledi çalıştıracak kod var
+Verici devre şemasında kamerayı koyacağım veya robot kol koyacağım, servo motorları sağ sol yukarı aşşağı hareket edecek şekilde kodun yazılması lazım
+öyle bir kodu internette bulamadım
+pic kullanacaktım ama proteus yaptıklarımı kaydetmiyordu şema çizsemde kaydedemiyorum bende atmega328p kullanmaya karar verdim
+eğer çok yer kaplama gibi bir durumu olursa yanına pic 16F84A kullanabilirim(adı tam olarak böylemiydi hatırlamıyorum
+özet geçmek gerekirse;
+butonlara basıldığında servo motorların sağ sol yukarı aşşağı hareket edecek şekilde kod yazılması gerek
+Bu kodun led vericisinin içine yazılması gerek
